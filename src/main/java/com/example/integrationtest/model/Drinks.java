@@ -1,25 +1,28 @@
 package com.example.integrationtest.model;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Meals {
-    String idMeal;
-    String strMeal;
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class Drinks {
+
+    String idDrink;
+    String strDrink;
     String strDrinkAlternate;
-    String strCategory;
-    String strArea;
-    String strInstructions;
-    String strMealThumb;
     String strTags;
-    String strYoutube;
+    String strVideo;
+    String strCategory;
+    String strIBA;
+    String strAlcoholic;
+    String strGlass;
+    String strInstructions;
+    String strInstructionsES;
+    String strInstructionsDE;
+    String strInstructionsFR;
+    String strInstructionsIT;
+    String strDrinkThumb;
     String strIngredient1;
     String strIngredient2;
     String strIngredient3;
@@ -35,11 +38,6 @@ public class Meals {
     String strIngredient13;
     String strIngredient14;
     String strIngredient15;
-    String strIngredient16;
-    String strIngredient17;
-    String strIngredient18;
-    String strIngredient19;
-    String strIngredient20;
     String strMeasure1;
     String strMeasure2;
     String strMeasure3;
@@ -55,14 +53,8 @@ public class Meals {
     String strMeasure13;
     String strMeasure14;
     String strMeasure15;
-    String strMeasure16;
-    String strMeasure17;
-    String strMeasure18;
-    String strMeasure19;
-    String strMeasure20;
     String strImageSource;
     String strCreativeCommonsConfirmed;
     String dateModified;
-    String strSource;
-
+    String strImageAttribution;
 }
