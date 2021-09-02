@@ -18,9 +18,9 @@ public class WebClientImpl {
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-        String forMapper = response.substring(10, response.length()-2);
-        Meals meal = objectMapper.readValue(forMapper, Meals.class);
-        return meal;
+        MealResponse response1 = objectMapper.readValue(response, MealResponse.class);
+
+        return response1.getMeals().get(0);
 
     }
 
