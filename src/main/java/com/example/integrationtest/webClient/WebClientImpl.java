@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class WebClientImpl {
@@ -41,7 +42,7 @@ public class WebClientImpl {
         return responseMapped.getDrinks().get(0);
     }
 
-    public List<Drinks> receiveAllDrinks(String URI) throws Exception{
+    public DrinkResponse receiveAllDrinks(String URI) throws Exception{
         WebClient webClient = WebClient.create();
         String response = webClient.get()
                 .uri(URI)
@@ -49,6 +50,17 @@ public class WebClientImpl {
                 .bodyToMono(String.class)
                 .block();
         DrinkResponse responseMapped = mapper.readValue(response, DrinkResponse.class);
-        return responseMapped.getDrinks();
+        return responseMapped;
+    }
+
+    public MealResponse receiveAllMeals(String URI) throws Exception{
+        WebClient webClient = WebClient.create();
+        String response = webClient.get()
+                .uri(URI)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        MealResponse responseMapped = mapper.readValue(response, MealResponse.class);
+        return responseMapped;
     }
 }

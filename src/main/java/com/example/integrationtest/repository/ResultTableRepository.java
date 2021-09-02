@@ -11,5 +11,6 @@ import java.util.List;
 public interface ResultTableRepository extends CrudRepository<ResultTable, Integer> {
 
     public List<ResultTable> findAllByTypeIgnoreCase(String type);
+    public List<ResultTable> findAllByIdBetween(int min, int max);
 
 }

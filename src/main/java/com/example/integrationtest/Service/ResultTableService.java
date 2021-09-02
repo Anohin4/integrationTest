@@ -1,14 +1,16 @@
-package com.example.integrationtest.Service;
+package com.example.integrationtest.service;
 
 import com.example.integrationtest.model.Drinks;
 import com.example.integrationtest.model.Meals;
 import com.example.integrationtest.model.ResultTable;
 import com.example.integrationtest.repository.ResultTableRepository;
+import com.example.integrationtest.webClient.DrinkResponse;
+import com.example.integrationtest.webClient.MealResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ResultTableService {
@@ -34,9 +36,46 @@ public class ResultTableService {
     }
 
     public void saveAllDrinks() throws Exception{
-        List<Drinks> drinks = drinksService.getAllDrinks();
-        for(Drinks drink : drinks) {
-            resultTableRepository.save(new ResultTable(drink));
+        String URI = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
+        char letter = 'a';
+        while (letter <= 'z'){
+            Optional<DrinkResponse> drinkResponse= drinksService.getAllDrinks(URI + letter);
+            //if there is no drinks starting with that letter, just go on
+            if (drinkResponse.isEmpty()) {
+                letter++;
+                continue;
+            }
+            //If response not null, taking List of drinks and add to DB
+            List<Drinks> drinks = drinkResponse.get().getDrinks();
+            for(Drinks drink : drinks) {
+                resultTableRepository.save(new ResultTable(drink));
+            }
+            letter++;
         }
+    }
+
+    public void saveAllMeals() throws Exception{
+        String URI = "https://www.themealdb.com/api/json/v1/1/search.php?f=";
+        char letter = 'a';
+        while (letter <= 'z'){
+            Optional<MealResponse> mealResponse = mealService.getAllMeals(URI + letter);
+            //if there is no drinks starting with that letter, just go on
+            if (mealResponse.isEmpty()) {
+                letter++;
+                continue;
+            }
+            //If response not null, taking List of drinks and add to DB
+            List<Meals> meals = mealResponse.get().getMeals();
+            for(Meals meal : meals) {
+                resultTableRepository.save(new ResultTable(meal));
+            }
+            letter++;
+        }
+    }
+
+    public List<ResultTable> giveAllByPage(int page) {
+        int min = (page - 1) * 10;
+        int max = min + 10;
+        return resultTableRepository.findAllByIdBetween(min, max);
     }
 }
