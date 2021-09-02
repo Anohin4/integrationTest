@@ -1,19 +1,38 @@
-package com.example.integrationtest.Service;
+package com.example.integrationtest.service;
 
 import com.example.integrationtest.model.Meals;
+import com.example.integrationtest.webClient.MealResponse;
 import com.example.integrationtest.webClient.WebClientImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class MealService {
+    final
+    WebClientImpl webClient;
 
-    String URI = "https://www.themealdb.com/api/json/v1/1/random.php";
+    final
+    ObjectMapper objectMapper;
 
-    public Meals getMeal() throws Exception {
-        WebClientImpl webClientImpl = new WebClientImpl();
-        return webClientImpl.callMealApi(URI);
+    public MealService(ObjectMapper objectMapper, WebClientImpl webClient) {
+        this.objectMapper = objectMapper;
+        this.webClient = webClient;
     }
 
+    public Meals getMeal() throws Exception {
+        String URI = "https://www.themealdb.com/api/json/v1/1/random.php";
+        return webClient.callMealApi(URI);
+    }
+
+    public Optional<MealResponse> getAllMeals(String URI) throws Exception {
+        MealResponse mealResponse = webClient.receiveAllMeals(URI);
+        //if there is no cocktails with that letter, return empty value, to avoid NPE
+        if(mealResponse.getMeals() == null) {
+            return Optional.empty();
+        }
+        //if everything is ok, return mealResponse object
+        return Optional.of(mealResponse);
+    }
 }

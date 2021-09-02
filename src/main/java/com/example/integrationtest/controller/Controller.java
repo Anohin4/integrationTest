@@ -1,6 +1,6 @@
 package com.example.integrationtest.controller;
 
-import com.example.integrationtest.Service.ResultTableService;
+import com.example.integrationtest.service.ResultTableService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,5 +36,12 @@ public class Controller {
         return ResponseEntity
                 .status(200)
                 .body(resultTableService.findByType(type));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity lookAll(@RequestParam int page) {
+        return ResponseEntity
+                .status(200)
+                .body(resultTableService.giveAllByPage(page));
     }
 }

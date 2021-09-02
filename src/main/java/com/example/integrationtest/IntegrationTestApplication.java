@@ -1,12 +1,12 @@
 package com.example.integrationtest;
 
-import com.example.integrationtest.Service.ResultTableService;
-import com.example.integrationtest.repository.ResultTableRepository;
+import com.example.integrationtest.service.ResultTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 
 @SpringBootApplication
 public class IntegrationTestApplication {
@@ -19,8 +19,12 @@ public class IntegrationTestApplication {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void doSomethingAfterStartup() throws Exception{
+    public void saveAllDrinks() throws Exception{
         resultTableService.saveAllDrinks();
     }
 
+    @EventListener(ApplicationReadyEvent.class)
+    public void saveAllMeals() throws Exception{
+        resultTableService.saveAllMeals();
+    }
 }
