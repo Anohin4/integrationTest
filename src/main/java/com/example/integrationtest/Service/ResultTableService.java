@@ -1,5 +1,6 @@
 package com.example.integrationtest.Service;
 
+import com.example.integrationtest.model.Drinks;
 import com.example.integrationtest.model.Meals;
 import com.example.integrationtest.model.ResultTable;
 import com.example.integrationtest.repository.ResultTableRepository;
@@ -30,5 +31,12 @@ public class ResultTableService {
 
     public List<ResultTable> findByType(String type) {
         return resultTableRepository.findAllByTypeIgnoreCase(type);
+    }
+
+    public void saveAllDrinks() throws Exception{
+        List<Drinks> drinks = drinksService.getAllDrinks();
+        for(Drinks drink : drinks) {
+            resultTableRepository.save(new ResultTable(drink));
+        }
     }
 }
