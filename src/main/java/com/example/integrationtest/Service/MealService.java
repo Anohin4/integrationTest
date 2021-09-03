@@ -28,7 +28,7 @@ public class MealService {
     }
 
     public Optional<MealResponse> getAllMealsByLetter(String URI) throws Exception {
-        MealResponse mealResponse = webClient.receiveAllMeals(URI);
+        MealResponse mealResponse = webClient.callMealApi(URI);
         //if there is no cocktails with that letter, return empty value, to avoid NPE
         if(mealResponse.getMeals() == null) {
             return Optional.empty();
