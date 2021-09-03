@@ -32,7 +32,7 @@ public class DrinksService {
 
     public Optional<DrinkResponse> getListOfDrinks(String URI) throws Exception {
         DrinkResponse drinkResponse = webClient.callDrinksApi(URI);
-        //if there is no cocktails with that letter, return empty value, to avoid NPE
+        //if there is no cocktails in list, return empty value, to avoid NPE
         if(drinkResponse.getDrinks() == null) {
             return Optional.empty();
         }

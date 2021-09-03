@@ -29,7 +29,7 @@ public class MealService {
 
     public Optional<MealResponse> getListOfMealsLetter(String URI) throws Exception {
         MealResponse mealResponse = webClient.callMealApi(URI);
-        //if there is no cocktails with that letter, return empty value, to avoid NPE
+        //if there is no meals in list, return empty value, to avoid NPE
         if(mealResponse.getMeals() == null) {
             return Optional.empty();
         }
