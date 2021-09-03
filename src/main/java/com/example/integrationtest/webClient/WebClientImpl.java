@@ -15,7 +15,7 @@ public class WebClientImpl {
     @Autowired
     ObjectMapper mapper;
 
-    public Meals callMealApi(String URI) throws Exception{
+    public MealResponse callMealApi(String URI) throws Exception{
         WebClient webClient = WebClient.create();
         String response = webClient.get()
                 .uri(URI)
@@ -25,11 +25,11 @@ public class WebClientImpl {
 
         //converting json to array with meals
         MealResponse responseMapped = mapper.readValue(response, MealResponse.class);
-        return responseMapped.getMeals().get(0);
+        return responseMapped;
 
     }
 
-    public Drinks callDrinksApi(String URI) throws Exception {
+    public DrinkResponse callDrinksApi(String URI) throws Exception {
         WebClient webClient = WebClient.create();
         String response = webClient.get()
                 .uri(URI)
@@ -37,9 +37,8 @@ public class WebClientImpl {
                 .bodyToMono(String.class)
                 .block();
         //converting json to array with meals
-        DrinkResponse responseMapped = new DrinkResponse();
-        responseMapped = mapper.readValue(response, responseMapped.getClass());
-        return responseMapped.getDrinks().get(0);
+        DrinkResponse responseMapped = mapper.readValue(response, DrinkResponse.class);
+        return responseMapped;
     }
 
     public DrinkResponse receiveAllDrinks(String URI) throws Exception{
