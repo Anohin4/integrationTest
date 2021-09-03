@@ -41,28 +41,13 @@ public class Controller {
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity findAllById(@RequestParam int page, @RequestParam String order) {
-        Page<ResultTable> result;
-        if(order.equals("asc")) {
-            result = resultTableService.findAllById(page);
-        } else {
-            result = resultTableService.findAllByIdDesc(page);
-        }
+    public ResponseEntity findAllById(@RequestParam int page,
+                                      @RequestParam(defaultValue = "id") String sortBy,
+                                      @RequestParam(defaultValue = "asc") String order) {
+        Page<ResultTable> result = resultTableService.findAll(page, sortBy, order);
         return ResponseEntity
                 .status(200)
                 .body(result);
     }
 
-    @GetMapping(value = "/allByName")
-    public ResponseEntity findAllByName(@RequestParam int page, @RequestParam String order) {
-        Page<ResultTable> result;
-        if(order.equals("asc")) {
-            result = resultTableService.findAllByNameAsc(page);
-        } else {
-            result = resultTableService.findAllByNameDesc(page);
-        }
-        return ResponseEntity
-                .status(200)
-                .body(result);
-    }
 }

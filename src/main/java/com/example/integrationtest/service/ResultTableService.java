@@ -77,23 +77,15 @@ public class ResultTableService {
         }
     }
 
-    public Page<ResultTable> findAllById(int page) {
-        Pageable pageable = PageRequest.of(page, 10);
-        return resultTableRepository.findAll(pageable);
-    }
-
-    public Page<ResultTable> findAllByIdDesc(int page) {
-        Pageable pageable = PageRequest.of(page, 10, Sort.by("id").descending());
-        return resultTableRepository.findAll(pageable);
-    }
-
-    public Page<ResultTable> findAllByNameDesc(int page) {
-        Pageable pageable = PageRequest.of(page, 10, Sort.by("name").descending());
-        return resultTableRepository.findAll(pageable);
-    }
-
-    public Page<ResultTable> findAllByNameAsc(int page) {
-        Pageable pageable = PageRequest.of(page, 10, Sort.by("name").ascending());
+    public Page<ResultTable> findAll(int page,
+                                     String sortBy,
+                                     String order) {
+        Pageable pageable;
+        if (order.equals("asc")) {
+            pageable = PageRequest.of(page, 10, Sort.by(sortBy).ascending());
+        } else {
+            pageable = PageRequest.of(page, 10, Sort.by(sortBy).descending());
+        }
         return resultTableRepository.findAll(pageable);
     }
 }
