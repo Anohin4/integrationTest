@@ -24,9 +24,10 @@ public class DrinksService {
         this.webClient = webClient;
     }
 
-    public Drinks getDrink() throws Exception {
+    public Drinks addRandomDrink() throws Exception {
         String URI = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
-        return webClient.callDrinksApi(URI);
+        DrinkResponse drinkResponse = webClient.callDrinksApi(URI);
+        return drinkResponse.getDrinks().get(0);
     }
 
     public Optional<DrinkResponse> getAllDrinks(String URI) throws Exception {

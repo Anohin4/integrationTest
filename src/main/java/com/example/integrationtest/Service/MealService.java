@@ -21,9 +21,10 @@ public class MealService {
         this.webClient = webClient;
     }
 
-    public Meals getMeal() throws Exception {
+    public Meals addRandomMeal() throws Exception {
         String URI = "https://www.themealdb.com/api/json/v1/1/random.php";
-        return webClient.callMealApi(URI);
+        MealResponse mealResponse = webClient.callMealApi(URI);
+        return mealResponse.getMeals().get(0);
     }
 
     public Optional<MealResponse> getAllMeals(String URI) throws Exception {

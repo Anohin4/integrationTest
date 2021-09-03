@@ -24,11 +24,11 @@ public class ResultTableService {
     ResultTableRepository resultTableRepository;
 
     public void saveMealToResultTable() throws Exception{
-        resultTableRepository.save(new ResultTable(mealService.getMeal()));
+        resultTableRepository.save(new ResultTable(mealService.addRandomMeal()));
     }
 
     public void saveDrinkToResultTable() throws Exception{
-        resultTableRepository.save(new ResultTable(drinksService.getDrink()));
+        resultTableRepository.save(new ResultTable(drinksService.addRandomDrink()));
     }
 
     public List<ResultTable> findByType(String type) {
