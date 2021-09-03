@@ -7,8 +7,12 @@ import com.example.integrationtest.repository.ResultTableRepository;
 import com.example.integrationtest.webClient.DrinkResponse;
 import com.example.integrationtest.webClient.MealResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,9 +77,23 @@ public class ResultTableService {
         }
     }
 
-    public List<ResultTable> giveAllByPage(int page) {
-        int min = (page - 1) * 10;
-        int max = min + 10;
-        return resultTableRepository.findAllByIdBetween(min, max);
+    public Page<ResultTable> findAllById(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return resultTableRepository.findAll(pageable);
+    }
+
+    public Page<ResultTable> findAllByIdDesc(int page) {
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("id").descending());
+        return resultTableRepository.findAll(pageable);
+    }
+
+    public Page<ResultTable> findAllByNameDesc(int page) {
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("name").descending());
+        return resultTableRepository.findAll(pageable);
+    }
+
+    public Page<ResultTable> findAllByNameAsc(int page) {
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("name").ascending());
+        return resultTableRepository.findAll(pageable);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.integrationtest.controller;
 
+import com.example.integrationtest.model.ResultTable;
 import com.example.integrationtest.service.ResultTableService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,10 +40,29 @@ public class Controller {
                 .body(resultTableService.findByType(type));
     }
 
-    @GetMapping("/all")
-    public ResponseEntity lookAll(@RequestParam int page) {
+    @GetMapping(value = "/all")
+    public ResponseEntity findAllById(@RequestParam int page, @RequestParam String order) {
+        Page<ResultTable> result;
+        if(order.equals("asc")) {
+            result = resultTableService.findAllById(page);
+        } else {
+            result = resultTableService.findAllByIdDesc(page);
+        }
         return ResponseEntity
                 .status(200)
-                .body(resultTableService.giveAllByPage(page));
+                .body(result);
+    }
+
+    @GetMapping(value = "/allByName")
+    public ResponseEntity findAllByName(@RequestParam int page, @RequestParam String order) {
+        Page<ResultTable> result;
+        if(order.equals("asc")) {
+            result = resultTableService.findAllByNameAsc(page);
+        } else {
+            result = resultTableService.findAllByNameDesc(page);
+        }
+        return ResponseEntity
+                .status(200)
+                .body(result);
     }
 }
