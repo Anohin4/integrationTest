@@ -39,7 +39,7 @@ public class ResultTableService {
         String URI = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
         char letter = 'a';
         while (letter <= 'z'){
-            Optional<DrinkResponse> drinkResponse= drinksService.getAllDrinks(URI + letter);
+            Optional<DrinkResponse> drinkResponse= drinksService.getAllDrinksByLetter(URI + letter);
             //if there is no drinks starting with that letter, just go on
             if (drinkResponse.isEmpty()) {
                 letter++;
@@ -58,7 +58,7 @@ public class ResultTableService {
         String URI = "https://www.themealdb.com/api/json/v1/1/search.php?f=";
         char letter = 'a';
         while (letter <= 'z'){
-            Optional<MealResponse> mealResponse = mealService.getAllMeals(URI + letter);
+            Optional<MealResponse> mealResponse = mealService.getAllMealsByLetter(URI + letter);
             //if there is no drinks starting with that letter, just go on
             if (mealResponse.isEmpty()) {
                 letter++;

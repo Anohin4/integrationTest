@@ -30,7 +30,7 @@ public class DrinksService {
         return drinkResponse.getDrinks().get(0);
     }
 
-    public Optional<DrinkResponse> getAllDrinks(String URI) throws Exception {
+    public Optional<DrinkResponse> getAllDrinksByLetter(String URI) throws Exception {
         DrinkResponse drinkResponse = webClient.receiveAllDrinks(URI);
         //if there is no cocktails with that letter, return empty value, to avoid NPE
         if(drinkResponse.getDrinks() == null) {
