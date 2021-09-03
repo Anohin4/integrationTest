@@ -12,8 +12,12 @@ import java.util.Optional;
 
 @Component
 public class WebClientImpl {
-    @Autowired
+    final
     ObjectMapper mapper;
+
+    public WebClientImpl(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
 
     public MealResponse callMealApi(String URI) throws Exception{
         WebClient webClient = WebClient.create();
@@ -38,28 +42,6 @@ public class WebClientImpl {
                 .block();
         //converting json to array with meals
         DrinkResponse responseMapped = mapper.readValue(response, DrinkResponse.class);
-        return responseMapped;
-    }
-
-    public DrinkResponse receiveAllDrinks(String URI) throws Exception{
-        WebClient webClient = WebClient.create();
-        String response = webClient.get()
-                .uri(URI)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
-        DrinkResponse responseMapped = mapper.readValue(response, DrinkResponse.class);
-        return responseMapped;
-    }
-
-    public MealResponse receiveAllMeals(String URI) throws Exception{
-        WebClient webClient = WebClient.create();
-        String response = webClient.get()
-                .uri(URI)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
-        MealResponse responseMapped = mapper.readValue(response, MealResponse.class);
         return responseMapped;
     }
 }
