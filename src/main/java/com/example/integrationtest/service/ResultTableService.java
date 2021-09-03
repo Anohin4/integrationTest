@@ -24,11 +24,11 @@ public class ResultTableService {
     ResultTableRepository resultTableRepository;
 
     public void saveMealToResultTable() throws Exception{
-        resultTableRepository.save(new ResultTable(mealService.addRandomMeal()));
+        resultTableRepository.save(new ResultTable(mealService.getOneMeal()));
     }
 
     public void saveDrinkToResultTable() throws Exception{
-        resultTableRepository.save(new ResultTable(drinksService.addRandomDrink()));
+        resultTableRepository.save(new ResultTable(drinksService.getOneDrink()));
     }
 
     public List<ResultTable> findByType(String type) {
@@ -39,7 +39,7 @@ public class ResultTableService {
         String URI = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
         char letter = 'a';
         while (letter <= 'z'){
-            Optional<DrinkResponse> drinkResponse= drinksService.getAllDrinksByLetter(URI + letter);
+            Optional<DrinkResponse> drinkResponse= drinksService.getListOfDrinks(URI + letter);
             //if there is no drinks starting with that letter, just go on
             if (drinkResponse.isEmpty()) {
                 letter++;
@@ -58,7 +58,7 @@ public class ResultTableService {
         String URI = "https://www.themealdb.com/api/json/v1/1/search.php?f=";
         char letter = 'a';
         while (letter <= 'z'){
-            Optional<MealResponse> mealResponse = mealService.getAllMealsByLetter(URI + letter);
+            Optional<MealResponse> mealResponse = mealService.getListOfMealsLetter(URI + letter);
             //if there is no drinks starting with that letter, just go on
             if (mealResponse.isEmpty()) {
                 letter++;

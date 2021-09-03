@@ -24,13 +24,13 @@ public class DrinksService {
         this.webClient = webClient;
     }
 
-    public Drinks addRandomDrink() throws Exception {
+    public Drinks getOneDrink() throws Exception {
         String URI = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
         DrinkResponse drinkResponse = webClient.callDrinksApi(URI);
         return drinkResponse.getDrinks().get(0);
     }
 
-    public Optional<DrinkResponse> getAllDrinksByLetter(String URI) throws Exception {
+    public Optional<DrinkResponse> getListOfDrinks(String URI) throws Exception {
         DrinkResponse drinkResponse = webClient.callDrinksApi(URI);
         //if there is no cocktails with that letter, return empty value, to avoid NPE
         if(drinkResponse.getDrinks() == null) {
