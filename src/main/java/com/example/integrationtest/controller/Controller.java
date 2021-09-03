@@ -41,7 +41,7 @@ public class Controller {
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity findAllById(@RequestParam int page,
+    public ResponseEntity findAllById(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "id") String sortBy,
                                       @RequestParam(defaultValue = "asc") String order) {
         Page<ResultTable> result = resultTableService.findAll(page, sortBy, order);
